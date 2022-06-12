@@ -1,3 +1,9 @@
+#Junk
+.DS_Store
+.vscode/
+.idea/
+
+
 # Logs
 logs
 *.log
