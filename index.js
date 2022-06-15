@@ -1,4 +1,4 @@
 require("dotenv").config();
-const { serverExpress } = require("./serverExpress");
+const { server } = require("./src/server");
 // const fs = require("fs").promises;
 // const path = require("node:path");
