@@ -1,20 +1,12 @@
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 const MONGO_URL = process.env.MONGO_URL;
-const collections = {};
-getCollections = () => collections;
+// mongoose.Promise = global.Promise;
 
 const connectMongo = async () => {
-  const client = await MongoClient.connect(MONGO_URL, {
-    useNewUrlParser: true,
-  });
-
-  const db = client.db('GOIT');
-
-  collections.Posts = db.collection('posts');
+  await mongoose.connect(MONGO_URL, {dbName: 'GOIT'});
   console.log('database connected successfully!');
 };
 
 module.exports = {
   connectMongo,
-  getCollections,
 };

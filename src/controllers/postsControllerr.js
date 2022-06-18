@@ -1,14 +1,13 @@
-const ObjectId = require('mongodb').ObjectId;
+const {Post} = require('../db/postModel');
 
-const getPosts = async (req, res) => {
-  const posts = await req.db.Posts.find().toArray();
+const getPostsController = async (req, res) => {
+  const posts = await Post.find();
   res.json({posts, status: 'success'});
 };
 
-const getPostById = async (req, res) => {
+const getPostByIdController = async (req, res) => {
   const {id} = req.params;
-
-  const post = await req.db.Posts.findOne({_id: new ObjectId(id)});
+  const post = await Post.findById(id);
 
   if (!post) {
     res.status(400).json({message: `no post with id ${id}`});
@@ -16,29 +15,32 @@ const getPostById = async (req, res) => {
   res.json({post, status: 'success'});
 };
 
-const addPost = async (req, res) => {
+const addPostController = async (req, res) => {
   const {topic, text} = req.body;
-  await req.db.Posts.insert({topic, text});
+  const post = new Post({topic, text});
+
+  await post.save();
   res.json({status: 'success'});
 };
 
-const changePost = async (req, res) => {
+const changePostController = async (req, res) => {
   const {topic, text} = req.body;
   const {id} = req.params;
-  await req.db.Posts.updateOne({_id: new ObjectId(id)}, {$set: {topic, text}});
+  await Post.findByIdAndUpdate(id, {$set: {topic, text}});
+  // $set - дозволяє міняти тільки ті поля які передаються
   res.json({status: 'success'});
 };
 
-const deletePost = async (req, res) => {
+const deletePostController = async (req, res) => {
   const {id} = req.params;
-  await req.db.Posts.deleteOne({_id: new ObjectId(id)});
+  await Post.findByIdAndDelete(id);
   res.json({status: 'success'});
 };
 
 module.exports = {
-  getPosts,
-  getPostById,
-  addPost,
-  changePost,
-  deletePost,
+  getPostsController,
+  getPostByIdController,
+  addPostController,
+  changePostController,
+  deletePostController,
 };
