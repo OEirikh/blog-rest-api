@@ -1,39 +1,38 @@
-const {Post} = require('../db/postModel');
+const {
+  getPosts,
+  getPostsById,
+  addPost,
+  changePostById,
+  deletePostById,
+} = require('../servises/postsServise');
 
 const getPostsController = async (req, res) => {
-  const posts = await Post.find();
+  const posts = await getPosts();
   res.json({posts, status: 'success'});
 };
 
 const getPostByIdController = async (req, res) => {
   const {id} = req.params;
-  const post = await Post.findById(id);
-
-  if (!post) {
-    res.status(400).json({message: `no post with id ${id}`});
-  }
+  const post = await getPostsById(id);
   res.json({post, status: 'success'});
 };
 
 const addPostController = async (req, res) => {
   const {topic, text} = req.body;
-  const post = new Post({topic, text});
-
-  await post.save();
+  await addPost({topic, text});
   res.json({status: 'success'});
 };
 
 const changePostController = async (req, res) => {
   const {topic, text} = req.body;
   const {id} = req.params;
-  await Post.findByIdAndUpdate(id, {$set: {topic, text}});
-  // $set - дозволяє міняти тільки ті поля які передаються
+  await changePostById(id, {topic, text});
   res.json({status: 'success'});
 };
 
 const deletePostController = async (req, res) => {
   const {id} = req.params;
-  await Post.findByIdAndDelete(id);
+  await deletePostById(id);
   res.json({status: 'success'});
 };
 

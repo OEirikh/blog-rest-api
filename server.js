@@ -6,6 +6,7 @@ const morgan = require('morgan'); // logger
 // eslint-disable-next-line max-len
 const {connectMongo} = require('./src/db/connection'); // підключення до MongoDB через mongoose
 const {router} = require('./src/routers/postsRouter');
+const {errorHandler} = require('./src/helpers/apiHelpers');
 
 const PORT = process.env.PORT || 8090;
 
@@ -15,9 +16,7 @@ app.use(cors());
 
 app.use('/api/posts', router);
 
-app.use((error, req, res, next) => {
-  res.status(500).json({message: error.message});
-});
+app.use(errorHandler);
 
 const start = async () => {
   try {

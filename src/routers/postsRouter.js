@@ -1,8 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const {addPosstValidation} = require('../middlewares/validationMiddlewares');
-
-const {ctrlWrapper} = require('../middlewares/ctrlWrapper');
+const {ctrlWrapper} = require('../helpers/apiHelpers');
 const {
   getPostsController,
   getPostByIdController,
