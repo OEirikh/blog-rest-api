@@ -16,9 +16,9 @@ router
   // GET /api/posts/<123> => {post with <123>}
   .get('/:id', ctrlWrapper(getPostByIdController))
   // POST /api/posts => [newPost, ...posts]
-  .post('/', ctrlWrapper(addPostController), addPosstValidation)
+  .post('/', addPosstValidation, ctrlWrapper(addPostController))
   // PUT /api/posts/<123> => [change post with id:123, ...posts]
-  .put('/:id', ctrlWrapper(changePostController), addPosstValidation)
+  .put('/:id', addPosstValidation, ctrlWrapper(changePostController))
   // DELETE /api/posts/<123> => [delete post with id:123, ...posts]
   .delete('/:id', ctrlWrapper(deletePostController));
 

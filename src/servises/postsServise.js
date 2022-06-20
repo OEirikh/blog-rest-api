@@ -5,7 +5,6 @@ const getPosts = async () => {
   const posts = await Post.find();
   return posts;
 };
-
 const getPostsById = async (id) => {
   const post = await Post.findById(id);
 
@@ -15,7 +14,6 @@ const getPostsById = async (id) => {
 
   return post;
 };
-
 const addPost = async ({topic, text}) => {
   const post = new Post({topic, text});
 

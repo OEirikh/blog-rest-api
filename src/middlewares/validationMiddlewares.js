@@ -9,7 +9,6 @@ module.exports = {
     });
     const validationResults = schema.validate(req.body);
     if (validationResults) {
-      next;
       new ValidationError(validationResults.error.details);
     }
     next();
@@ -22,7 +21,6 @@ module.exports = {
     });
     const validationResults = schema.validate(req.body);
     if (validationResults) {
-      next;
       new ValidationError(validationResults.error.details);
     }
     next();
