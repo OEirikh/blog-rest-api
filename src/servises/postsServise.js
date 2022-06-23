@@ -1,30 +1,30 @@
 const {Post} = require('../db/postModel');
 const {WrongParametrsError} = require('../helpers/errors');
 
-const getPosts = async () => {
-  const posts = await Post.find();
+const getPosts = async (userId) => {
+  const posts = await Post.find({userId});
   return posts;
 };
-const getPostsById = async (id) => {
-  const post = await Post.findById(id);
+const getPostsById = async (postId, userId) => {
+  const post = await Post.findOne({_id: postId, userId});
 
   if (!post) {
-    throw new WrongParametrsError(`no post with id ${id}`);
+    throw new WrongParametrsError(`no post with id ${postId}`);
   }
 
   return post;
 };
-const addPost = async ({topic, text}) => {
-  const post = new Post({topic, text});
+const addPost = async ({topic, text, userId}) => {
+  const post = new Post({topic, text, userId});
 
   await post.save();
 };
-const changePostById = async (id, {topic, text}) => {
-  await Post.findByIdAndUpdate(id, {$set: {topic, text}});
+const changePostById = async (postId, {topic, text, userId}) => {
+  await Post.findOneAndUpdate({_id: postId, userId}, {$set: {topic, text}});
   // $set - дозволяє міняти тільки ті поля які передаються
 };
-const deletePostById = async (id) => {
-  await Post.findByIdAndDelete(id);
+const deletePostById = async (postId, userId) => {
+  await Post.findOneAndDelete({_id: postId, userId});
 };
 
 module.exports = {

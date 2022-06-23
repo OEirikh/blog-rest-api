@@ -1,6 +1,8 @@
 const express = require('express');
 const router = new express.Router();
 const {addPosstValidation} = require('../middlewares/validationMiddlewares');
+const {authMiddleware} = require('../middlewares/authMiddleware');
+
 const {ctrlWrapper} = require('../helpers/apiHelpers');
 const {
   getPostsController,
@@ -10,6 +12,7 @@ const {
   deletePostController,
 } = require('../controllers/postsControllerr');
 
+router.use(authMiddleware);
 // GET /api/posts => [...posts]
 router.get('/', ctrlWrapper(getPostsController));
 // GET /api/posts/<123> => {post with <123>}
