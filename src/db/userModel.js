@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre('save', async function() {
-  console.log('this', this.is, 'this');
+userSchema.pre('save', async function () {
+  // console.log('this', this.is, 'this');
   if (this.isNew) {
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
