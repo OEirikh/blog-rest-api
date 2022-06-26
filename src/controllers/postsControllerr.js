@@ -4,7 +4,7 @@ const {
   addPost,
   changePostById,
   deletePostById,
-} = require('../servises/postsServise');
+} = require('../services/postsService');
 
 const getPostsController = async (req, res) => {
   const userId = req.user._id;

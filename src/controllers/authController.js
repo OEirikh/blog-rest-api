@@ -1,4 +1,4 @@
-const {registration, login} = require('../servises/authServise');
+const {registration, login} = require('../services/authService');
 
 const registrationController = async (req, res) => {
   const {email, password} = req.body;
