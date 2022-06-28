@@ -7,6 +7,7 @@ const morgan = require('morgan'); // logger
 const {connectMongo} = require('./src/db/connection'); // підключення до MongoDB через mongoose
 const {postsRouter} = require('./src/routers/postsRouter');
 const {authRouter} = require('./src/routers/authRooter');
+const {filesRouter} = require('./src/routers/filesRouter');
 
 const {errorHandler} = require('./src/helpers/apiHelpers');
 
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use('/api/posts', postsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/files', filesRouter);
 
 app.use(errorHandler);
 

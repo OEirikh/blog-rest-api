@@ -4,11 +4,9 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['google'],
+  extends: ['standard', 'prettier'],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 12,
   },
-  rules: {
-    'require-jsdoc': 'off',
-  },
+  rules: {},
 };

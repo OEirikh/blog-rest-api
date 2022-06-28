@@ -21,11 +21,11 @@ const login = async (email, password) => {
     throw new NotAuthorizedError(`Wrong password `);
   }
   const token = await jwt.sign(
-      {
-        _id: user._id,
-        createdAt: user.createdAt,
-      },
-      process.env.JWT_SECRET,
+    {
+      _id: user._id,
+      createdAt: user.createdAt,
+    },
+    process.env.JWT_SECRET,
   );
   return token;
 };
