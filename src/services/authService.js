@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const sgMail = require('@sendgrid/mail');
 const {User} = require('../db/userModel');
 const {NotAuthorizedError} = require('../helpers/errors');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const registration = async (email, password) => {
   const user = new User({
@@ -9,6 +11,24 @@ const registration = async (email, password) => {
     password,
   });
   await user.save();
+
+  const msg = {
+    to: email,
+    from: 'o.eyrikh@gmail.com', // Use the email address or domain you verified above
+    subject: 'thank you for registrations',
+    text: 'and easy to do anywhere, even with Node.js',
+    html: '<h1>and easy to do anywhere, even with Node.js</h1>',
+  };
+
+  try {
+    await sgMail.send(msg);
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      console.error(error.response.body);
+    }
+  }
 };
 
 const login = async (email, password) => {
